@@ -2,12 +2,13 @@
 This file will set up a local server for our demo, making response for the tool calls for the agent.
 You should first host a server by running this file, then to run the `ragent.py`
 '''
-import os
 from typing import Literal, Dict, Optional
+import os
 
 import fastapi
 import uvicorn
 from contextlib import asynccontextmanager
+# from starlette.middleware.cors import CORSMiddleware
 
 from register import ToolRegister
 toolreg = ToolRegister()
@@ -16,29 +17,13 @@ toolreg = ToolRegister()
 async def lifespan(app: fastapi.FastAPI):
     """
     Initialize the app.
-    For windows user: If no appid is registed, the server will register an appid for our active agent, and save it to appid.txt.
     """
-    global appid
-    id_file = os.path.join(os.path.split(__file__)[0],'appid.txt')
-    if os.name == 'nt':
-
-        # TODO: is it possible if we can read our own AUMID but not from files?
-        if not os.path.exists(id_file):
-            # run script register_hkey_aumid.py
-            import subprocess
-            ret = subprocess.run(['python',os.path.join(os.path.split(__file__)[0],'register_hkey_aumid.py')])
-            if ret.returncode != 0:
-                raise Exception('Failed to register AUMID')
-
-        with open(id_file) as f:
-            appid = f.read().strip()
-
     print('Initializing Server complete.')
 
     yield
 
 
-app = fastapi.FastAPI(lifespan=lifespan)
+app = fastapi.FastAPI()
 
 
 @app.get('/')
@@ -129,4 +114,4 @@ async def rename_file(original_path:str, new_name:str) -> Dict[str,str]:
         return {'status': 'error', 'message': str(e)}
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host='127.0.0.1', port=8000, reload=True)
+    uvicorn.run("main:app", host='127.0.0.1', port=8080, reload=True)

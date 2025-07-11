@@ -1,22 +1,18 @@
 [tool.poetry]
-name = "proactiveagent"
+name = "agent"
 version = "0.1.0"
 description = "A LLM-based agent that proactively predict your instruction for easier usage"
-authors = ["Yaxi Lu <luyaxi@live.com>", "Shenzhi Yang <summerfall1819@gmail.com>"]
 readme = "README.md"
 license = "Apache License 2.0"
+packages = [{include = "agent"}]
 
 [project]
-name = "proactiveagent"
+name = "agent"
 version = "0.1.0"
 description = "A LLM-based agent that proactively predict your instruction for easier usage"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "Apache License 2.0"}
-authors = [
-    {name = "Yaxi Lu", email = "luyaxi@live.com"},
-    {name = "Shenzhi Yang", email = "summerfall1819@gmail.com"}
-]
 dependencies = [
     "tqdm",
     "uuid",
@@ -36,14 +32,12 @@ dependencies = [
     "tenacity>=9.0.0",
     "colorlog>=6.8.2",
     "watchdog",
-    "aw-client>=0.5.13",
     "jsonlines>=4.0.0",
     "pyperclip>=1.9.0",
-    "pywinauto; sys_platform=='win32'",
     "codelinker",
     "docstring_parser",
-    "windows-toasts; sys_platform=='win32'",
-    "macos_notifications; sys_platform=='darwin'",
+    "httpx[socks]",
+    "httptools>=0.4.0",
 ]
 
 [tool.poetry.dependencies]
@@ -66,14 +60,12 @@ tiktoken = "^0.7.0"
 tenacity = "^9.0.0"
 colorlog = "^6.8.2"
 watchdog = "*"
-aw-client = "^0.5.13"
 jsonlines = "^4.0.0"
 pyperclip = "^1.9.0"
-pywinauto = {version = "*", markers = "sys_platform == 'win32'"}
 codelinker = "*"
 docstring_parser = "*"
-windows-toasts = {version = "*", markers = "sys_platform == 'win32'"}
-macos_notifications = {version = "*", markers = "sys_platform == 'darwin'"}
+httpx = {version = "*", extras = ["socks"]}
+httptools = "^0.4.0"
 
 [build-system]
 requires = ["poetry-core"]

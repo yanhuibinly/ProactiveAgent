@@ -20,12 +20,12 @@ class AgentChannels(Channels):
         """The channel that triggers the agent execute the operation."""
         return ChannelTag(self.prefix + "execute")
 
-class PCChannels(Channels):
-    """PC channel tags."""
+class DemoChannels(Channels):
+    """Demo channel tags."""
     
     @property
     def notify(self):
-        """Notify channel is used trigger let the PC do the execution."""
+        """Notify channel is used trigger let the Demo do the execution."""
         return ChannelTag(self.prefix + "notify")
 
     @property
@@ -33,23 +33,11 @@ class PCChannels(Channels):
         """Feedback channel is used to inform the agent about the user's feedback"""
         return ChannelTag(self.prefix + "feedback")
 
-class AndroidChannels(Channels):
-    @property
-    def write(self):
-        """Write to the socket."""
-        return ChannelTag(self.prefix + "write")
-
-    @property
-    def read(self):
-        """Read from the socket."""
-        return ChannelTag(self.prefix + "read")
-
 class AllChannels(Channels):
     def __init__(self):
         super().__init__("")
         self.agent = AgentChannels("agent")
-        self.pc = PCChannels("pc")
-        self.android = AndroidChannels("android")
+        self.demo = DemoChannels("demo")
 
     @property
     def setup(self):
